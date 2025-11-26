@@ -21,12 +21,6 @@ pipeline {
             }
         }
 
-        // Optional: build docker image
-        // stage('Build Docker Image') {
-        //     steps {
-        //         sh 'docker build -t flask-app .'
-        //     }
-        // }
 
     }
 
