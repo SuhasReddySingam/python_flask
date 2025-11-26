@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                sh 'python3 -m venv venv'
+                sh '. venv/bin/activate && pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '. venv/bin/activate && pytest'
+            }
+        }
+
+        // Optional: build docker image
+        // stage('Build Docker Image') {
+        //     steps {
+        //         sh 'docker build -t flask-app .'
+        //     }
+        // }
+
+    }
+
+    post {
+        always {
+            junit 'pytest.xml'
+        }
+    }
+}
